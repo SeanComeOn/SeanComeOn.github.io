@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="StylizedGS: Controllable Stylization for 3D Gaussian Splatting">
+  <meta name="keywords" content="3DGS, Stylization">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>StylizedGS: Controllable Stylization for 3D Gaussian Splatting</title>
+
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    };
+  </script>
+
+<script id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">StylizedGS: Controllable Stylization for 3D Gaussian Splatting</h1>
+          <h1 class="title is-3">TPAMI 2025</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://Kristen-Z.github.io">Dingxi Zhang</a><sup>1</sup>,</span>
+            <span class="author-block">
+              <a href="http://people.geometrylearning.com/yyj/">Yu-Jie Yuan</a><sup>1,2</sup>,</span>
+            <span class="author-block">
+              <a href="https://SeanComeOn.github.io">Zhuoxun Chen</a><sup>1</sup>,</span>
+            <span class="author-block">
+              <a href="https://people.wgtn.ac.nz/fanglue.zhang">Fang-Lue Zhang</a><sup>3</sup>,</span>
+            <span class="author-block">
+              <a href="https://lynnho.github.io/">Zhenliang He</a><sup>1,4</sup>,</span>
+            <span class="author-block">
+              <a href="https://people.ucas.edu.cn/~sgshan">Shiguang Shan</a><sup>1,4</sup>,</span>
+            <span class="author-block">
+              <a href="http://www.geometrylearning.com/lin/">Lin Gao</a><sup>1,2*</sup>,</span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>University of Chinese Academy of Sciences</span>
+            <span class="author-block"><sup>2</sup>Beijing Key Laboratory of Mobile Computing and Pervasive Device, Institute of Computing Technology, Chinese Academy of Sciences</span>
+            <span class="author-block"><sup>3</sup>Victoria University of Wellington</span>
+            <span class="author-block"><sup>4</sup>Key Laboratory of Intelligent Information Processing, Institute of Computing Technology, Chinese Academy of Sciences</span>
+            <span class="author-block"><sup>*</sup>Corresponding Author</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/2404.05220"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/2404.05220"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <!-- Video Link. -->
+              <!-- <span class="link-block">
+                <a href=""
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-youtube"></i>
+                  </span>
+                  <span>Video</span>
+                </a>
+              </span> -->
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href="https://github.com/Kristen-Z/"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+<!-- Teaser. -->
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <div>
+        <img src="./static/images/teaser_new.jpg" alt="teaser" class="center">
+      </div>
+      <h2 class="subtitle has-text">
+        Given a 2D style image, the proposed StylizedGS method can stylize the pre-trained 3D Gaussian Splatting to match the desired style with detailed geometric features and satisfactory visual quality within a few minutes. We also enable users to control several perceptual factors, such as color, the style pattern size (scale), and the stylized regions (spatial), during the stylization to enhance the customization capabilities.
+      </h2>
+
+    </div>
+  </div>
+</section>
+
+
+<section class="hero is-light is-small">
+  <div class="hero-body" style="background-color: white;">
+    <div class="container is-max-desktop">
+      <div id="results-carousel" class="carousel results-carousel">
+
+        <div class="item" style="margin: 0px; overflow: auto; border:0px; text-align: center;">
+          <!-- <img src="https://raw.githubusercontent.com/kristen-z/stylizedgs-pages/master/xxx" style="width:40%; "> -->
+        </div>
+		
+        <div class="item" style="margin: 0px; overflow: auto; border:0px; text-align: center;">
+          <!-- <img src="https://raw.githubusercontent.com/kristen-z/stylizedgs-pages/master/xxx" style="width:40%; "> -->
+        </div>
+        <div class="item" style="margin: 0px; overflow: auto; border:0px; text-align: center;">
+          <!-- <img src="https://raw.githubusercontent.com/kristen-z/stylizedgs-pages/master/xxx" style="width:40%; "> -->
+        </div>
+        <div class="item" style="margin: 0px; overflow: auto; border:0px; text-align: center;">
+          <!-- <img src="https://raw.githubusercontent.com/kristen-z/stylizedgs-pages/master/xxx" style="width:40%; "> -->
+        </div>
+        <div class="item" style="margin: 0px; overflow: auto; border:0px; text-align: center;">
+          <!-- <img src="https://raw.githubusercontent.com/kristen-z/stylizedgs-pages/master/xxx" style="width:40%; "> -->
+        </div>
+        <div class="item" style="margin: 0px; overflow: auto; border:0px; text-align: center;">
+          <!-- <img src="https://raw.githubusercontent.com/kristen-z/stylizedgs-pages/master/xxx" style="width:40%; "> -->
+        </div>
+        <div class="item" style="margin: 0px; overflow: auto; border:0px; text-align: center;">
+          <!-- <img src="https://raw.githubusercontent.com/kristen-z/stylizedgs-pages/master/xxx" style="width:40%; "> -->
+		  
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-body" style="background-color: white;">
+    <div class="container is-max-desktop">
+      <div id="results-carousel" class="carousel results-carousel">
+
+        <div class="item" style="margin: 0px; overflow: auto; border:0px; text-align: center;">
+          <!-- <img src="https://raw.githubusercontent.com/kristen-z/stylizedgs-pages/master/xxx" style="width:75%; "> -->
+        </div>
+        <div class="item" style="margin: 0px; overflow: auto; border:0px; text-align: center;">
+          <!-- <img src="https://raw.githubusercontent.com/kristen-z/stylizedgs-pages/master/xxx" style="width:75%; "> -->
+        </div>
+        <div class="item" style="margin: 0px; overflow: auto; border:0px; text-align: center;">
+          <!-- <img src="https://raw.githubusercontent.com/kristen-z/stylizedgs-pages/master/xxx" style="width:75%; "> -->
+        </div>
+        <div class="item" style="margin: 0px; overflow: auto; border:0px; text-align: center;">
+          <!-- <img src="https://raw.githubusercontent.com/kristen-z/stylizedgs-pages/master/xxx" style="width:75%; "> -->
+        </div>
+        <div class="item" style="margin: 0px; overflow: auto; border:0px; text-align: center;">
+          <!-- <img src="https://raw.githubusercontent.com/kristen-z/stylizedgs-pages/master/xxx" style="width:75%; "> -->
+        </div>
+        <div class="item" style="margin: 0px; overflow: auto; border:0px; text-align: center;">
+          <!-- <img src="https://raw.githubusercontent.com/kristen-z/stylizedgs-pages/master/xxx" style="width:75%; "> -->
+        </div>
+        <div class="item" style="margin: 0px; overflow: auto; border:0px; text-align: center;">
+          <!-- <img src="https://raw.githubusercontent.com/kristen-z/stylizedgs-pages/master/xxx" style="width:75%; "> -->
+        </div>
+        <div class="item" style="margin: 0px; overflow: auto; border:0px; text-align: center;">
+          <!-- <img src="https://raw.githubusercontent.com/kristen-z/stylizedgs-pages/master/xxx" style="width:75%; "> -->
+        </div>
+        <div class="item" style="margin: 0px; overflow: auto; border:0px; text-align: center;">
+          <!-- <img src="https://raw.githubusercontent.com/kristen-z/stylizedgs-pages/master/xxx" style="width:75%; "> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+  <!-- <div class="container"> -->
+  
+    <!-- Paper video. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full-width">
+        <br />
+        <h2 class="title is-3">Video</h2>
+        <div class="publication-video">
+
+          <!-- <iframe src="https://www.youtube.com/watch?v=at_42ekU0I0"
+                  frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe> -->
+          <!-- <iframe width="400" height="300" src="https://www.youtube.com/embed/xxxxxxxx" 
+          title="YouTube video player" frameborder="0" 
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+          allowfullscreen>
+          </iframe> -->
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <!-- <div class="column is-four-fifths"> -->
+      <div class="column is-full-width">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+As XR technology continues to advance rapidly, 3D generation and editing are increasingly crucial. Among these, stylization plays a key role in enhancing the appearance of 3D models. By utilizing stylization, users can achieve consistent artistic effects in 3D editing using a single reference style image, making it a user-friendly editing method. However, recent NeRF-based 3D stylization methods encounter efficiency issues that impact the user experience, and their implicit nature limits their ability to accurately transfer geometric pattern styles.
+Additionally, the ability for artists to apply flexible control over stylized xxx highly desirable to foster an environment conducive to creative exploration. To address the above issues, we introduce StylizedGS, an efficient 3D neural style transfer framework with adaptable control over perceptual factors based on 3D Gaussian Splatting (3DGS) representation. We propose a filter-based refinement to eliminate floaters that affect the stylization effects in the scene reconstruction process. The nearest neighbor-based style loss is introduced to achieve stylization by fine-tuning the geometry and color parameters of 3DGS, while a depth preservation loss with other regularizations is proposed to prevent the tampering of geometry content. Moreover, facilitated by specially designed losses, StylizedGS enables users to control color, stylized scale, and regions during the stylization to possess customization capabilities.
+Our method achieves high-quality stylization results characterized by faithful brushstrokes and geometric consistency with flexible controls. 
+Extensive experiments across various xxx demonstrate the effectiveness and efficiency of our method concerning both stylization quality and inference speed.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pipeline. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full-width">
+        <br />
+        <h2 class="title is-3">Pipeline</h2>
+          <img src="./static/images/pipeline_new.jpg" alt="method" style="width:70%; ">
+        <div class="content has-text-justified">
+          <p>
+            We first reconstruct a photo-realistic 3DGS $G_{\theta}^{rec}$ from multi-view input. Following this, color matching with the style image is performed, accompanied by the filter-based refinement to preemptively address potential artifacts. 
+    During optimization, we employ multiple loss terms to capture detailed local style structures and preserve geometric attributes. Users can flexibly control color, scale, and spatial attributes during stylization through customizable loss terms. Once this stylization is done, we can obtain consistent free-viewpoint stylized renderings.
+          </p>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Results. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="container is-max-desktop">
+        <br />
+        <h2 class="title is-3">Results Gallery</h2>
+
+        <h3 class="title is-5" style="text-align:left"></h3>
+        <div id="results-carousel" class="carousel results-carousel">
+          <div class="item" style="margin: 0px; overflow: auto; border:0px; text-align: center;">
+            <!-- <img src="https://raw.githubusercontent.com/kristen-z/stylizedgs-pages/master/xxx" style="width:40%; "> -->
+          </div>
+          <div class="item" style="margin: 0px; overflow: auto; border:0px; text-align: center;">
+            <!-- <img src="https://raw.githubusercontent.com/kristen-z/stylizedgs-pages/master/xxx" style="width:40%; "> -->
+          </div>
+          <div class="item" style="margin: 0px; overflow: auto; border:0px; text-align: center;">
+            <!-- <img src="https://raw.githubusercontent.com/kristen-z/stylizedgs-pages/master/xxx" style="width:40%; "> -->
+          </div>
+          <div class="item" style="margin: 0px; overflow: auto; border:0px; text-align: center;">
+            <!-- <img src="https://raw.githubusercontent.com/kristen-z/stylizedgs-pages/master/xxx" style="width:40%; "> -->
+          </div>
+          <div class="item" style="margin: 0px; overflow: auto; border:0px; text-align: center;">
+            <!-- <img src="https://raw.githubusercontent.com/kristen-z/stylizedgs-pages/master/xxx" style="width:40%; "> -->
+          </div>
+          <div class="item" style="margin: 0px; overflow: auto; border:0px; text-align: center;">
+            <!-- <img src="https://raw.githubusercontent.com/kristen-z/stylizedgs-pages/master/xxx" style="width:40%; "> -->
+          </div>
+          <div class="item" style="margin: 0px; overflow: auto; border:0px; text-align: center;">
+            <!-- <img src="https://raw.githubusercontent.com/kristen-z/stylizedgs-pages/master/xxx" style="width:40%; "> -->
+          </div>
+        </div>
+
+        <br />
+        <h3 class="title is-5" style="text-align:left"></h3>
+        <div id="results-carousel" class="carousel results-carousel">
+          <div class="item" style="margin: 0px; overflow: auto; border:0px; text-align: center;">
+            <!-- <img src="https://raw.githubusercontent.com/kristen-z/stylizedgs-pages/master/xxx" style="width:50%; "> -->
+          </div>
+          <div class="item" style="margin: 0px; overflow: auto; border:0px; text-align: center;">
+            <!-- <img src="https://raw.githubusercontent.com/kristen-z/stylizedgs-pages/master/xxx" style="width:50%; "> -->
+          </div>
+          <div class="item" style="margin: 0px; overflow: auto; border:0px; text-align: center;">
+            <!-- <img src="https://raw.githubusercontent.com/kristen-z/stylizedgs-pages/master/xxx" style="width:50%; "> -->
+          </div>
+          <div class="item" style="margin: 0px; overflow: auto; border:0px; text-align: center;">
+            <!-- <img src="https://raw.githubusercontent.com/kristen-z/stylizedgs-pages/master/xxx" style="width:50%; "> -->
+          </div>
+          <div class="item" style="margin: 0px; overflow: auto; border:0px; text-align: center;">
+            <!-- <img src="https://raw.githubusercontent.com/kristen-z/stylizedgs-pages/master/xxx" style="width:50%; "> -->
+          </div>
+          <div class="item" style="margin: 0px; overflow: auto; border:0px; text-align: center;">
+            <!-- <img src="https://raw.githubusercontent.com/kristen-z/stylizedgs-pages/master/xxx" style="width:50%; "> -->
+          </div>
+          <div class="item" style="margin: 0px; overflow: auto; border:0px; text-align: center;">
+            <!-- <img src="https://raw.githubusercontent.com/kristen-z/stylizedgs-pages/master/xxx" style="width:50%; "> -->
+          </div>
+        </div>
+		
+		<br />
+        <h3 class="title is-5" style="text-align:left"></h3>
+        <div id="results-carousel" class="carousel results-carousel">
+          <div class="item" style="margin: 0px; overflow: auto; border:0px; text-align: center;">
+            <!-- <img src="https://raw.githubusercontent.com/kristen-z/stylizedgs-pages/master/xxx" style="width:75%; "> -->
+          </div>
+          <div class="item" style="margin: 0px; overflow: auto; border:0px; text-align: center;">
+            <!-- <img src="https://raw.githubusercontent.com/kristen-z/stylizedgs-pages/master/xxx" style="width:75%; "> -->
+          </div>
+          <div class="item" style="margin: 0px; overflow: auto; border:0px; text-align: center;">
+            <!-- <img src="https://raw.githubusercontent.com/kristen-z/stylizedgs-pages/master/xxx" style="width:75%; "> -->
+          </div>
+          <div class="item" style="margin: 0px; overflow: auto; border:0px; text-align: center;">
+            <!-- <img src="https://raw.githubusercontent.com/kristen-z/stylizedgs-pages/master/xxx" style="width:75%; "> -->
+          </div>
+          <div class="item" style="margin: 0px; overflow: auto; border:0px; text-align: center;">
+            <!-- <img src="https://raw.githubusercontent.com/kristen-z/stylizedgs-pages/master/xxx" style="width:75%; "> -->
+          </div>
+        </div>
+		
+		<br />
+        <h3 class="title is-5" style="text-align:left"></h3>
+        <div id="results-carousel" class="carousel results-carousel">
+          <div class="item" style="margin: 0px; overflow: auto; border:0px; text-align: center;">
+            <!-- <img src="https://raw.githubusercontent.com/kristen-z/stylizedgs-pages/master/xxx" style="width:75%; "> -->
+          </div>
+          <div class="item" style="margin: 0px; overflow: auto; border:0px; text-align: center;">
+            <!-- <img src="https://raw.githubusercontent.com/kristen-z/stylizedgs-pages/master/xxx" style="width:75%; "> -->
+          </div>
+          <div class="item" style="margin: 0px; overflow: auto; border:0px; text-align: center;">
+            <!-- <img src="https://raw.githubusercontent.com/kristen-z/stylizedgs-pages/master/xxx" style="width:75%; "> -->
+          </div>
+          <div class="item" style="margin: 0px; overflow: auto; border:0px; text-align: center;">
+            <!-- <img src="https://raw.githubusercontent.com/kristen-z/stylizedgs-pages/master/xxx" style="width:75%; "> -->
+          </div>
+          <div class="item" style="margin: 0px; overflow: auto; border:0px; text-align: center;">
+            <!-- <img src="https://raw.githubusercontent.com/kristen-z/stylizedgs-pages/master/xxx" style="width:75%; "> -->
+          </div>
+        </div>
+		
+		<br />
+        <h3 class="title is-5" style="text-align:left"></h3>
+        <div id="results-carousel" class="carousel results-carousel">
+          <div class="item" style="margin: 0px; overflow: auto; border:0px; text-align: center;">
+            <!-- <img src="https://raw.githubusercontent.com/kristen-z/stylizedgs-pages/master/xxx" style="width:75%; "> -->
+          </div>
+          <div class="item" style="margin: 0px; overflow: auto; border:0px; text-align: center;">
+            <!-- <img src="https://raw.githubusercontent.com/kristen-z/stylizedgs-pages/master/xxx" style="width:75%; "> -->
+          </div>
+          <div class="item" style="margin: 0px; overflow: auto; border:0px; text-align: center;">
+            <!-- <img src="https://raw.githubusercontent.com/kristen-z/stylizedgs-pages/master/xxx" style="width:75%; "> -->
+          </div>
+          <div class="item" style="margin: 0px; overflow: auto; border:0px; text-align: center;">
+            <!-- <img src="https://raw.githubusercontent.com/kristen-z/stylizedgs-pages/master/xxx" style="width:75%; "> -->
+          </div>
+          <div class="item" style="margin: 0px; overflow: auto; border:0px; text-align: center;">
+            <!-- <img src="https://raw.githubusercontent.com/kristen-z/stylizedgs-pages/master/xxx" style="width:75%; "> -->
+          </div>
+        </div>
+		
+		<br />
+        <h3 class="title is-5" style="text-align:left"></h3>
+        <div id="results-carousel" class="carousel results-carousel">
+          <div class="item" style="margin: 0px; overflow: auto; border:0px; text-align: center;">
+            <!-- <img src="https://raw.githubusercontent.com/kristen-z/stylizedgs-pages/master/xxx" style="width:75%; "> -->
+          </div>
+          <div class="item" style="margin: 0px; overflow: auto; border:0px; text-align: center;">
+            <!-- <img src="https://raw.githubusercontent.com/kristen-z/stylizedgs-pages/master/xxx" style="width:75%; "> -->
+          </div>
+          <div class="item" style="margin: 0px; overflow: auto; border:0px; text-align: center;">
+            <!-- <img src="https://raw.githubusercontent.com/kristen-z/stylizedgs-pages/master/xxx" style="width:75%; "> -->
+          </div>
+          <div class="item" style="margin: 0px; overflow: auto; border:0px; text-align: center;">
+            <!-- <img src="https://raw.githubusercontent.com/kristen-z/stylizedgs-pages/master/xxx" style="width:75%; "> -->
+          </div>
+          <div class="item" style="margin: 0px; overflow: auto; border:0px; text-align: center;">
+            <!-- <img src="https://raw.githubusercontent.com/kristen-z/stylizedgs-pages/master/xxx" style="width:75%; "> -->
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@article{zhang2024stylizedgscontrollablestylization3d,
+      title={StylizedGS: Controllable Stylization for 3D Gaussian Splatting}, 
+      author={Dingxi Zhang and Yu-Jie Yuan and Zhuoxun Chen and Fang-Lue Zhang and Zhenliang He and Shiguang Shan and Lin Gao},
+      year={2024},
+      eprint={2404.05220},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2404.05220}, 
+}</code></pre>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+
+    <div class="content has-text-centered">
+      <a class="icon-link"
+        href="">
+        <i class="fas fa-file-pdf"></i>
+      </a>
+      <a class="icon-link" 
+        href="https://github.com/FDNeRF/FDNeRF" 
+        class="external-link" disabled>
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
+
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website is licensed under a <a rel="license"
+                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+
+            The <a href="https://github.com/nerfies/nerfies.github.io">source code</a> for the website 
+            was taken from Nerfies. We appreciate the authors sharing the templates with us.
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</footer>
+
+</body>
+</html>
